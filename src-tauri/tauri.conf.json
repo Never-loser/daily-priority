@@ -15,7 +15,7 @@
       {
         "label": "main",
         "title": "Daily Priority",
-        "width": 400,
+        "width": 320,
         "height": 900,
         "resizable": false,
         "decorations": false,
@@ -42,6 +42,11 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "windows": {
+      "webviewInstallMode": {
+        "type": "offlineInstaller"
+      }
+    }
   }
 }
