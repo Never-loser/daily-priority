@@ -1,0 +1,36 @@
+{
+  "name": "daily-priority",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "اولویت روزانه — مدیریت کارهای روزانه با اولویت‌بندی و تایمر",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.1.1",
+    "@tauri-apps/plugin-autostart": "^2.0.0",
+    "@tauri-apps/plugin-notification": "^2.3.3",
+    "@tauri-apps/plugin-sql": "^2.2.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-vue-next": "^0.453.0",
+    "pinia": "^2.2.4",
+    "tailwind-merge": "^2.5.4",
+    "vue": "^3.5.12",
+    "vuedraggable": "^4.1.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.1.0",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vue-tsc": "^2.1.6"
+  }
+}
