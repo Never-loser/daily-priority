@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -----------------------------------------------------------------------
+   Design tokens — Light / Dark / Glass
+   -------------------------------------------------------------------- */
+@layer base {
+  :root {
+    --background: 42 24% 97%;
+    --foreground: 150 8% 14%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 150 8% 14%;
+
+    --muted: 42 18% 92%;
+    --muted-foreground: 150 6% 42%;
+
+    --border: 40 16% 86%;
+    --input: 40 16% 86%;
+    --ring: 174 64% 32%;
+
+    --primary: 174 64% 32%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 42 18% 92%;
+    --secondary-foreground: 150 8% 14%;
+
+    --accent: 174 50% 90%;
+    --accent-foreground: 174 64% 24%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --prio-low: 199 60% 48%;
+    --prio-mid: 35 92% 50%;
+    --prio-high: 0 72% 51%;
+
+    /* Glass variables (light) */
+    --glass-bg: rgba(255, 255, 255, 0.35);
+    --glass-card: rgba(255, 255, 255, 0.82);      /* solid کافی برای خوانایی متن */
+    --glass-card-border: rgba(200, 200, 200, 0.6);
+    --glass-panel: rgba(255, 255, 255, 0.55);     /* پنل تنظیمات — کمی شفاف‌تر */
+    --glass-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
+  }
+
+  .dark {
+    --background: 160 10% 9%;
+    --foreground: 40 20% 94%;
+
+    --card: 160 9% 13%;
+    --card-foreground: 40 20% 94%;
+
+    --muted: 160 8% 17%;
+    --muted-foreground: 150 6% 65%;
+
+    --border: 160 8% 20%;
+    --input: 160 8% 20%;
+    --ring: 174 64% 45%;
+
+    --primary: 174 64% 45%;
+    --primary-foreground: 160 30% 8%;
+
+    --secondary: 160 8% 18%;
+    --secondary-foreground: 40 20% 94%;
+
+    --accent: 174 30% 20%;
+    --accent-foreground: 174 70% 80%;
+
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --prio-low: 199 70% 58%;
+    --prio-mid: 35 92% 58%;
+    --prio-high: 0 78% 62%;
+
+    /* Glass variables (dark) */
+    --glass-bg: rgba(15, 25, 20, 0.35);
+    --glass-card: rgba(22, 36, 30, 0.88);         /* solid کافی برای خوانایی متن */
+    --glass-card-border: rgba(255, 255, 255, 0.08);
+    --glass-panel: rgba(18, 30, 24, 0.65);        /* پنل تنظیمات */
+    --glass-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* -----------------------------------------------------------------------
+   Glass mode overrides — فعال با کلاس .glass روی <html>
+   فلسفه: پس‌زمینه‌ی کل صفحه شفاف است (دسکتاپ از پشت دیده می‌شود)،
+   ولی کارت‌های تسک پس‌زمینه‌ی solid-with-opacity دارند — بدون blur.
+   این‌طوری متن کاملاً خوانا می‌ماند و حس شیشه‌ای از پس‌زمینه میاد نه از کارت‌ها.
+   فقط پنل تنظیمات (که روی کارت‌ها float می‌کند) blur می‌گیرد.
+   -------------------------------------------------------------------- */
+.glass html,
+.glass body,
+.glass #app {
+  background: transparent !important;
+}
+
+.glass .bg-background {
+  background: transparent !important;
+}
+
+/* کارت‌های تسک — solid با opacity بالا، بدون blur */
+.glass .bg-card,
+.glass [class*="bg-card"] {
+  background: var(--glass-card) !important;
+  border-color: var(--glass-card-border) !important;
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* نوار خلاصه و باکس‌های muted — کمی شفاف‌تر از کارت ولی همچنان solid */
+.glass .bg-muted,
+.glass [class*="bg-muted"]:not(.bg-muted\/0) {
+  background: var(--glass-card) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* پنل تنظیمات — این یکی blur می‌گیرد چون روی کارت‌ها float است
+   و محتوای خودش (دکمه‌ها) خوانا هستند حتی با blur */
+.glass [role="dialog"],
+.glass .absolute.rounded-xl.border {
+  background: var(--glass-panel) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-color: var(--glass-card-border) !important;
+  box-shadow: var(--glass-shadow);
+}
+
+/* -----------------------------------------------------------------------
+   Base styles
+   -------------------------------------------------------------------- */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    direction: rtl;
+    /* پیش‌فرض مرورگر ۱۶px است؛ چون کلاس‌های Tailwind بر پایه‌ی rem هستند،
+       کوچک‌کردن فونت ریشه هم متن و هم فاصله‌ها (padding/gap و...) را
+       یکجا و متناسب کوچک‌تر می‌کند — مناسب برای پنجره‌ی باریک ۳۰۰px. */
+    font-size: 14px;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "tnum" 1;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+    border-radius: 999px;
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.drag-ghost {
+  opacity: 0.4;
+}
+.drag-chosen {
+  cursor: grabbing;
+}
+
+/* جلوگیری از native HTML5 drag روی دستگیره‌ی جابه‌جایی تسک‌ها.
+   مرورگرهای کرومیومی/WebView2 به‌صورت پیش‌فرض SVG/img را draggable می‌کنند؛
+   این رفتار با Sortable.js (پایه‌ی vuedraggable) تداخل دارد و باعث می‌شود
+   کرسر به شکل ضربدر قرمز (not-allowed) دربیاید و درگ کار نکند. */
+.drag-handle,
+.drag-handle * {
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-touch-callout: none;
+}
